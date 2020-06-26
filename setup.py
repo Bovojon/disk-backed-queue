@@ -8,7 +8,7 @@ with open('requirements.txt') as f:
     REQUIREMENTS = f.read().splitlines()
 
 setuptools.setup(
-    name='take_home',
+    name='disk',
     version='0.1.0',
     install_requires=REQUIREMENTS,
     packages=setuptools.find_packages(),
