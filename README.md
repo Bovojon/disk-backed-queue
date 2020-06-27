@@ -1,6 +1,6 @@
 # Disk-backed queue
 
-While working with big data, I was curious to explore the applications of a a disk backed queue where a specified number of items in the queue can be kept in memory at any given time while all other items are written to disk.
+While working with big data, I was curious to explore the applications of a disk backed queue where a specified number of items in the queue can be kept in memory at any given time while all other items are written to disk.
 
 ## Design Choices
 * Instead of using any of the built-in Python collection classes (e.g. [] (Lists), collections, etc.) I used a linked list with head and tail pointers to implement the disk-backed queue. The linked list also enables O(1) insert and remove operations as the pointers just need to be updated when inserting or removing.
@@ -9,15 +9,15 @@ While working with big data, I was curious to explore the applications of a a di
 * I used Python's pickle module to serialize and deserialize the DiskQueue instances. This is because I needed a way to update and store the structure of the DiskQueue instance on file.
 * I added helper methods so that each method does the smallest unit of work possible. This made it easier to unit test.
 * As I was writing the methods, I thought of the following unit-test cases:
- - Peeking an empty queue
- - Peeking a non-empty queue
- - Enqueueing only one element
- - Enqueueing a string
- - Enqueueing when the queue is full
- - Dequeueing a non-full queue
- - Dequeueing a full queue
- - Dequeueing an empty queue
- - Dequeueing a queue with only one element
+  - Peeking an empty queue
+  - Peeking a non-empty queue
+  - Enqueueing only one element
+  - Enqueueing a string
+  - Enqueueing when the queue is full
+  - Dequeueing a non-full queue
+  - Dequeueing a full queue
+  - Dequeueing an empty queue
+  - Dequeueing a queue with only one element
 
 ### Time and Space complexity
 * The time complexity of enqueueing is O(1). When enqueueing, I create a node out of the value (which can be any Python object such as an `int`, `string`, `dictionary`, `None`, etc.) and check if the queue is full. If it is, then I get the DiskQueue instance from the pickle file if it already exists and add the node to its tail end. If the pickle file is empty then I create a new DiskQueue instance and point its head and tail to the new node. In either case, after I have a new DiskQueue with the new node, I store on the disk.
